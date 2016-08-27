@@ -2,7 +2,7 @@
 #https://github.com/ffnord/ffnord-puppet-gateway
 
 NAME="Freemesh Denmark"
-OPERATOR="Robin"
+OPERATOR="Robin (Aarhus)"
 CHANGELOG="https://ffhh.pads.ccc.de/freemesh-dk-vpn0-install-log"
 HOST_PREFIX="fmdk-vpn"
 VPN_NUMBER=0
@@ -30,10 +30,9 @@ echo " Happy Hacking! *" >>/etc/motd
 echo "**********************************************************" >>/etc/motd
 
 #Hostname setzen
-hostname nord-gw11
+hostname "$HOST_PREFIX$VPN_NUMBER"
 echo "127.0.1.1 vpn$VPN_NUMBER.$DOMAIN $HOST_PREFIX$VPN_NUMBER" >>/etc/hosts
-rm /etc/hostname
-echo "$HOST_PREFIX$VPN_NUMBER" >>/etc/hostname
+echo "$HOST_PREFIX$VPN_NUMBER" >/etc/hostname
 #benötigte Pakete installieren
 apt-get -y install sudo apt-transport-https git tcpdump mtr-tiny vim nano unp mlocate screen cmake build-essential libcap-dev pkg-config libgps-dev python3 ethtool lsb-release zip
 
@@ -41,7 +40,7 @@ apt-get -y install sudo apt-transport-https git tcpdump mtr-tiny vim nano unp ml
 echo "kernel.panic = 10" >>/etc/sysctl.conf
 
 #puppet Module installieren
-apt-get -y install --no-install-recommends puppet
+apt-get -y install --no-install-recommends puppet 
 puppet module install puppetlabs-stdlib && puppet module install puppetlabs-apt --version 1.5.1 && puppet module install puppetlabs-vcsrepo && puppet module install saz-sudo && puppet module install torrancew-account
 cd /etc/puppet/modules
 git clone https://github.com/ffnord/ffnord-puppet-gateway ffnord

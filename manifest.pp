@@ -91,6 +91,6 @@ class { 'ffnord::etckeeper': }
 # Useful packages
 package {
     # make sure that apt-transport-https is installed before starting
-  ['vim','tcpdump','dnsutils','realpath','screen','htop','tcpdump','mlocate','tig','apt-transport-https']:
+  ['vim','dnsutils','realpath','screen','htop','tcpdump','mlocate','tig']:
     ensure => installed;
 }
