@@ -2,7 +2,7 @@
 #https://github.com/ffnord/ffnord-puppet-gateway
 
 $VPN_NUMBER=0
-$DOMAIN=ffnord.net
+$DOMAIN="freemesh.dk"
 
 ##NGINX
 apt-get install -y nginx
