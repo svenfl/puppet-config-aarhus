@@ -43,12 +43,12 @@ ffnord::mesh {
 }
 
 ffnord::named::zone {
-  'fmdk': zone_git => 'git://somehost/ffgc-zone.git';
+  'fmdk': zone_git => 'git://github.com/Freemesh-Denmark/fmdk-zone.git';
 }
 
-ffnord::dhcpd::static {
-  'fmdk': static_git => 'git://somehost/ffgc-static.git';
-}
+#ffnord::dhcpd::static {
+#  'fmdk': static_git => 'git://github.com/Freemesh-Denmark/ffgc-static.git';
+#}
 
 class {
   'ffnord::vpn::provider::hideio':
