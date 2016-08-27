@@ -1,68 +1,96 @@
-class { 'ffnord::params':
-  router_id => "10.187.$$$.$$$",
-  icvpn_as => "65187",
-  wan_devices => ['eth0'],
-  include_bird4 => false,
-  maintenance => 0,
-  #debian_mirror => "http://repo.myloc.de/mirrors/ftp.de.debian.org/debian/";
-}
-# aus https://github.com/ffnord/site-nord/blob/master/site.conf
-# und https://github.com/freifunk/icvpn-meta/blob/master/nord
-ffnord::mesh { 'mesh_ffnord':
-        mesh_name => "Freifunk Nord"
-      , mesh_code => "ffnord"
-      , mesh_as => "65187"
-      , mesh_mac  => "fe:ed:be:ef:ff:$$"
-      , vpn_mac  => "fe:ed:be:ff:ff:$$"
-      , mesh_ipv6 => "2a03:2267:4e6f:7264::fd$$/64"
-      , mesh_ipv4  => "10.187.$$$.$$$/17"
-      , range_ipv4 => "10.187.0.0/16"
-      , mesh_mtu     => "1280"
-      , mesh_peerings    => "/root/mesh_peerings.yaml"
+# Gateway Aarhus
+class { 
+  'ffnord::params':
+    router_id => "5.186.50.156", # The id of this router, probably the ipv4 address
+                              # of the mesh device of the providing community
+    icvpn_as => "64879",      # The as of the providing community
+    wan_devices => ['eth0'],   # A array of devices which should be in the wan zone
 
-      , fastd_secret => "/root/nord-gw$$-fastd-secret.key"
-      , fastd_port   => 10050
-      , fastd_peers_git => 'https://github.com/Freifunk-Nord/nord-gw-peers.git'
+    # wmem_default => 87380,     # Define the default socket send buffer
+    # wmem_max     => 12582912,  # Define the maximum socket send buffer
+    # rmem_default => 87380,     # Define the default socket recv buffer
+    # rmem_max     => 12582912,  # Define the maximum socket recv buffer
 
-      , dhcp_ranges => ['10.187.$$$.2 10.187.$$$.254'] 
-      , dns_servers => ['10.187.$$$.1']
+    #max_backlog  => 5000,      # Define the maximum packages in buffer
 }
 
-class {'ffnord::vpn::provider::hideio':
-  openvpn_server => "$$$",
-  openvpn_port   => 3478,
-  openvpn_user   => "$$$",
-  openvpn_password => "$$$";
+# You can repeat this mesh block for every community you support
+ffnord::mesh { 
+  'mesh_ffgc':
+    mesh_name    => "Freemesh Denmark",
+    mesh_code    => "fmdk",
+    mesh_as      => 64879,
+    mesh_mac     => "de:ad:be:ef:de:ad",
+    vpn_mac      => "de:ad:be:ff:de:ad",
+    mesh_ipv6    => "fd35:f308:a922::ff00/64",
+    mesh_ipv4    => "10.212.0.1/24",
+    mesh_mtu     => "1280",
+    range_ipv4   => "10.212.0.0/20",
+    mesh_peerings => "/root/mesh_peerings.yaml",
+
+    fastd_secret => "/root/fastd_secret.key",
+    fastd_port   => 11280,
+    fastd_peers_git => 'git://github.com/Freemesh-Denmark/peers.git',
+
+    # the whole net: 10.212.0.1 - 10.212.15.254
+    dhcp_ranges => [ '10.212.0.2 10.212.0.254'],
+    dns_servers => [ '10.212.0.1'
+                   , '10.212.1.1'
+                   , '10.212.2.1'
+                   , '10.212.3.1'
+                   , '10.212.4.1'
+                   ]
 }
 
 ffnord::named::zone {
-  "nord": zone_git => "https://github.com/Freifunk-Nord/nord-zone.git", exclude_meta => 'nord';
+  'fmdk': zone_git => 'git://somehost/ffgc-zone.git';
 }
 
-ffnord::icvpn::setup {
-                'nordgw$$':
-                icvpn_as => 65187,
-                icvpn_ipv4_address => "10.207.$$$.$$$",
-                icvpn_ipv6_address => "fec0::a:cf:$$$:$$$",
-                icvpn_exclude_peerings     => [Nord],
-                tinc_keyfile       => "/root/nord-vpn$$-icvpn-rsa_key.priv"
+ffnord::dhcpd::static {
+  'fmdk': static_git => 'git://somehost/ffgc-static.git';
 }
 
 class {
-  ['ffnord::etckeeper','ffnord::rsyslog','ffnord::alfred']:
+  'ffnord::vpn::provider::hideio':
+    openvpn_server => "10.1.1.2",
+    openvpn_port   => 3478,
+    openvpn_user   => "wayne",
+    openvpn_password => "brucessecretpw",
 }
+
+#ffnord::icvpn::setup {
+#  'gotham_city0':
+#    icvpn_as => 65035,
+#    icvpn_ipv4_address => "10.112.0.1",
+#   icvpn_ipv6_address => "fec0::a:cf:0:35",
+#   icvpn_exclude_peerings     => [gotham],
+#   tinc_keyfile       => "/root/tinc_rsa_key.priv"
+#}
+
+#class {
+#  'ffnord::monitor::munin':
+#    host => '10.35.31.1'
+#}
 
 #class {
 #  'ffnord::monitor::nrpe':
-#     allowed_hosts => "217.70.197.95";
+#    allowed_hosts => '10.35.31.1'
 #}
+
 #class {
 #  'ffnord::monitor::zabbix':
-#    zabbixserver => "5.9.51.89";
+#    zabbixserver => "10.35.31.1";
 #}
+
+class { 
+    'ffnord::alfred': master => true # there may be only one gateway with master => true!
+}
+
+class { 'ffnord::etckeeper': }
 
 # Useful packages
 package {
-  ['vim','tcpdump','dnsutils','realpath','screen','htop','mlocate','tig']:
-     ensure => installed;
+    # make sure that apt-transport-https is installed before starting
+  ['vim','tcpdump','dnsutils','realpath','screen','htop','tcpdump','mlocate','tig','apt-transport-https']:
+    ensure => installed;
 }
