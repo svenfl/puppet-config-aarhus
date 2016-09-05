@@ -5,6 +5,7 @@ NAME="Freemesh Denmark"
 OPERATOR="Robin (Aarhus)"
 CHANGELOG="https://ffhh.pads.ccc.de/freemesh-dk-vpn0-install-log"
 HOST_PREFIX="gw"
+SUBDOMAIN_PREFIX="gw"
 VPN_NUMBER=0
 DOMAIN="freemesh.dk"
 
@@ -31,7 +32,7 @@ echo "**********************************************************" >>/etc/motd
 
 #Hostname setzen
 hostname "$HOST_PREFIX$VPN_NUMBER"
-echo "127.0.1.1 gw$VPN_NUMBER.$DOMAIN $HOST_PREFIX$VPN_NUMBER" >>/etc/hosts
+echo "127.0.1.1 $SUBDOMAIN_PREFIX$VPN_NUMBER.$DOMAIN $HOST_PREFIX$VPN_NUMBER" >>/etc/hosts
 echo "$HOST_PREFIX$VPN_NUMBER" >/etc/hostname
 #benötigte Pakete installieren
 apt-get -y install sudo apt-transport-https git tcpdump mtr-tiny vim nano unp mlocate screen cmake build-essential libcap-dev pkg-config libgps-dev python3 ethtool lsb-release zip
@@ -60,3 +61,9 @@ cd /root
 
 echo now copy your manifest.pp, key_files and mesh_peerings.yaml to /root
 echo and then start puppet apply --verbose /root/manifest.pp
+
+
+#USER TODO:
+echo now copy the files manifest.pp, fastd_secret.key and mesh_peerings.yaml to /root
+echo and then start puppet apply --verbose /root/manifest.pp
+echo 'don´t run those scripts without screen sesssion!!!'
