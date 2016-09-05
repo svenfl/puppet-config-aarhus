@@ -4,7 +4,7 @@
 NAME="Freemesh Denmark"
 OPERATOR="Robin (Aarhus)"
 CHANGELOG="https://ffhh.pads.ccc.de/freemesh-dk-vpn0-install-log"
-HOST_PREFIX="fmdk-vpn"
+HOST_PREFIX="gw"
 VPN_NUMBER=0
 DOMAIN="freemesh.dk"
 
