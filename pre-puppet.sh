@@ -31,7 +31,7 @@ echo "**********************************************************" >>/etc/motd
 
 #Hostname setzen
 hostname "$HOST_PREFIX$VPN_NUMBER"
-echo "127.0.1.1 vpn$VPN_NUMBER.$DOMAIN $HOST_PREFIX$VPN_NUMBER" >>/etc/hosts
+echo "127.0.1.1 gw$VPN_NUMBER.$DOMAIN $HOST_PREFIX$VPN_NUMBER" >>/etc/hosts
 echo "$HOST_PREFIX$VPN_NUMBER" >/etc/hostname
 #benötigte Pakete installieren
 apt-get -y install sudo apt-transport-https git tcpdump mtr-tiny vim nano unp mlocate screen cmake build-essential libcap-dev pkg-config libgps-dev python3 ethtool lsb-release zip
