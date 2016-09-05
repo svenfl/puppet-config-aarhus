@@ -19,9 +19,13 @@ cat >> /etc/resolv.conf <<-EOF
 	domain $TLD
 	search $TLD
 	nameserver 127.0.0.1
-	nameserver 62.141.32.5
-	nameserver 62.141.32.4
-	nameserver 62.141.32.3
+	nameserver 213.133.98.98
+	nameserver 213.133.99.99
+	nameserver 213.133.100.100
 	nameserver 8.8.8.8
 EOF
 
+# check if everything is running:
+service fastd restart
+service isc-dhcp-server restart
+check-services
