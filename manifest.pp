@@ -52,7 +52,7 @@ ffnord::named::zone {
 
 class {
   'ffnord::vpn::provider::hideio':
-    openvpn_server => "10.1.1.2",
+    openvpn_server => "nl.hide.io",
     openvpn_port   => 3478,
     openvpn_user   => "wayne",
     openvpn_password => "brucessecretpw",
