@@ -5,7 +5,7 @@ VPN_NUMBER=0
 DOMAIN="freemesh.dk"
 TLD="fmdk"
 
-##NGINX if needed:
+##NGINX if needed to serve the firmware for the auto-updater
 #apt-get install -y nginx
 
 #mkdir /opt/www
