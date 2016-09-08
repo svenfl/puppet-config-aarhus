@@ -35,7 +35,7 @@ hostname "$HOST_PREFIX$VPN_NUMBER"
 echo "127.0.1.1 $SUBDOMAIN_PREFIX$VPN_NUMBER.$DOMAIN $HOST_PREFIX$VPN_NUMBER" >>/etc/hosts
 echo "$HOST_PREFIX$VPN_NUMBER" >/etc/hostname
 #benötigte Pakete installieren
-apt-get -y install sudo apt-transport-https haveged git tcpdump mtr-tiny vim nano unp mlocate screen cmake build-essential libcap-dev pkg-config libgps-dev python3 ethtool lsb-release zip locales-all
+apt-get -y install sudo apt-transport-https bash-completion haveged git tcpdump mtr-tiny vim nano unp mlocate screen cmake build-essential libcap-dev pkg-config libgps-dev python3 ethtool lsb-release zip locales-all
 
 #REBOOT bei Kernel Panic
 echo "kernel.panic = 10" >>/etc/sysctl.conf
