@@ -2,12 +2,12 @@
 #https://github.com/ffnord/ffnord-puppet-gateway
 
 NAME="Freemesh Denmark"
-OPERATOR="Robin (Aarhus)"
+OPERATOR="Sven"
 CHANGELOG="https://ffhh.pads.ccc.de/freemesh-dk-vpn0-install-log"
 HOST_PREFIX="gw"
 SUBDOMAIN_PREFIX="gw"
-VPN_NUMBER=0
-DOMAIN="freemesh.dk"
+VPN_NUMBER=4
+DOMAIN="freemesh.in-kiel.de"
 
 #backborts einbauen
 echo "deb http://http.debian.net/debian wheezy-backports main" >>/etc/apt/sources.list

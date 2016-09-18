@@ -1,7 +1,7 @@
 #!/bin/bash
 #https://github.com/ffnord/ffnord-puppet-gateway
 
-VPN_NUMBER=0
+VPN_NUMBER=4
 DOMAIN="freemesh.dk"
 TLD="fmdk"
 

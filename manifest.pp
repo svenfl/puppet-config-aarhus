@@ -1,7 +1,7 @@
-# Gateway Aarhus
+# Gateway Kiel
 class { 
   'ffnord::params':
-    router_id => "5.186.50.156", # The id of this router, probably the ipv4 address
+    router_id => "138.201.16.163", # The id of this router, probably the ipv4 address
                               # of the mesh device of the providing community
     icvpn_as => "64879",      # The as of the providing community
     wan_devices => ['eth0'],   # A array of devices which should be in the wan zone
@@ -22,7 +22,7 @@ ffnord::mesh {
     mesh_as      => 64879,
     mesh_mac     => "de:ad:be:ef:de:ad",
     vpn_mac      => "de:ad:be:ff:de:ad",
-    mesh_ipv6    => "fd35:f308:a922::ff00/64",
+    mesh_ipv6    => "fd35:f308:a922::ff04/64",
     mesh_ipv4    => "10.212.0.1/21",
     mesh_mtu     => "1280",
     range_ipv4   => "10.212.0.0/20",
@@ -33,7 +33,7 @@ ffnord::mesh {
     fastd_peers_git => 'git://github.com/Freemesh-Denmark/peers.git',
 
     # the whole net: 10.212.0.1 - 10.212.15.254
-    dhcp_ranges => [ '10.212.0.2 10.212.4.254'],
+    dhcp_ranges => [ '10.212.12.2 10.212.14.254'],
     dns_servers => [ '10.212.0.1'
                    , '10.212.1.1'
                    , '10.212.2.1'
@@ -83,7 +83,7 @@ class {
 #}
 
 class { 
-    'ffnord::alfred': master => true # there may be only one gateway with master => true!
+    'ffnord::alfred': master => false # there may be only one gateway with master => true!
 }
 
 class { 'ffnord::etckeeper': }
